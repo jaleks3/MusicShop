@@ -15,13 +15,9 @@ public partial class Record
 
     public DateTime Released { get; set; }
 
-    public int AuthorId { get; set; }
-
     public int DistributorId { get; set; }
 
     public int TypeOfRecordId { get; set; }
-
-    public virtual Author Author { get; set; } = null!;
 
     public virtual Distributor Distributor { get; set; } = null!;
 
@@ -30,6 +26,8 @@ public partial class Record
     public virtual ICollection<RecordStorage> RecordStorages { get; set; } = new List<RecordStorage>();
 
     public virtual TypeOfRecord TypeOfRecord { get; set; } = null!;
+
+    public virtual ICollection<Artist> Artists { get; set; } = new List<Artist>();
 
     public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
 }

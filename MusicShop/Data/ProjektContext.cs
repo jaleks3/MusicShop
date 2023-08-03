@@ -18,7 +18,7 @@ public partial class ProjektContext : DbContext
 
     public virtual DbSet<Address> Addresses { get; set; }
 
-    public virtual DbSet<Author> Authors { get; set; }
+    public virtual DbSet<Artist> Artists { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -72,11 +72,11 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.StreetNumber).HasColumnName("street_number");
         });
 
-        modelBuilder.Entity<Author>(entity =>
+        modelBuilder.Entity<Artist>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("Author_pk");
+            entity.HasKey(e => e.Id).HasName("Artist_pk");
 
-            entity.ToTable("Author");
+            entity.ToTable("Artist");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
@@ -84,6 +84,25 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("text")
                 .HasColumnName("name");
+
+            entity.HasMany(d => d.Records).WithMany(p => p.Artists)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ArtistRecord",
+                    r => r.HasOne<Record>().WithMany()
+                        .HasForeignKey("RecordId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("Artist_Record_Record"),
+                    l => l.HasOne<Artist>().WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("Artist_Record_Artist"),
+                    j =>
+                    {
+                        j.HasKey("ArtistId", "RecordId").HasName("Artist_Record_pk");
+                        j.ToTable("Artist_Record");
+                        j.IndexerProperty<int>("ArtistId").HasColumnName("Artist_id");
+                        j.IndexerProperty<int>("RecordId").HasColumnName("Record_id");
+                    });
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -211,7 +230,6 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
-            entity.Property(e => e.AuthorId).HasColumnName("Author_id");
             entity.Property(e => e.Description)
                 .HasColumnType("text")
                 .HasColumnName("description");
@@ -224,11 +242,6 @@ public partial class ProjektContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("released");
             entity.Property(e => e.TypeOfRecordId).HasColumnName("TypeOfRecord_id");
-
-            entity.HasOne(d => d.Author).WithMany(p => p.Records)
-                .HasForeignKey(d => d.AuthorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Record_Author");
 
             entity.HasOne(d => d.Distributor).WithMany(p => p.Records)
                 .HasForeignKey(d => d.DistributorId)

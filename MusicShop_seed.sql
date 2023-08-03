@@ -5,12 +5,10 @@ VALUES
     (2, 'Los Angeles', 'USA', 'California', 54321, 'Sunset Blvd', 20),
     (3, 'London', 'UK', 'England', 123456, 'Buckingham Palace Road', 1),
     (4, 'Tokyo', 'Japan', 'Tokyo', 1000002, 'Chiyoda', 3),
-    (5, 'Berlin', 'Germany', 'Berlin', 10117, 'Brandenburg Gate', 10),
-    (6, 'Paris', 'France', 'Île-de-France', 75000, 'Champs-Élysées', 25),
-    (7, 'Sydney', 'Australia', 'New South Wales', 2000, 'Sydney Opera House', 2);
+    (5, 'Berlin', 'Germany', 'Berlin', 10117, 'Brandenburg Gate', 10);
 
--- Tabela: Author
-INSERT INTO Author (id, name)
+-- Tabela: Artist
+INSERT INTO Artist (id, name)
 VALUES
     (1, 'John Smith'),
     (2, 'Emma Johnson'),
@@ -49,9 +47,9 @@ VALUES
 -- Tabela: "Order"
 INSERT INTO "Order" (id, quantity, Address_id, Status_id, RequestAt, FulfillAt)
 VALUES
-    (1, 5, 1, 1, '2023-07-28 10:00:00', '2023-07-28 15:00:00'),
-    (2, 3, 2, 2, '2023-07-28 11:30:00', '2023-07-28 16:45:00'),
-    (3, 7, 5, 3, '2023-07-28 09:15:00', '2023-07-28 14:30:00');
+    (1, 5, 1, 1, '2023-08-03 10:00:00', '2023-08-03 15:00:00'),
+    (2, 3, 2, 2, '2023-08-03 11:30:00', '2023-08-03 16:45:00'),
+    (3, 7, 3, 3, '2023-08-03 09:15:00', '2023-08-03 14:30:00');
 
 -- Tabela: Order_Record
 INSERT INTO Order_Record (Record_id, Order_id, Quantity)
@@ -61,11 +59,11 @@ VALUES
     (3, 2, 1);
 
 -- Tabela: Record
-INSERT INTO Record (id, name, price, description, released, Author_id, Distributor_id, TypeOfRecord_id)
+INSERT INTO Record (id, name, price, description, released, Distributor_id, TypeOfRecord_id)
 VALUES
-    (1, 'Thriller', 30, 'Thriller is the sixth studio album by American singer Michael Jackson, released on November 30, 1982.', '1982-11-30', 1, 1, 1),
-    (2, 'The Dark Side of the Moon', 25, 'The Dark Side of the Moon is the eighth studio album by the English progressive rock band Pink Floyd, released on March 1, 1973.', '1973-03-01', 2, 2, 2),
-    (3, 'Rumours', 20, 'Rumours is the eleventh studio album by British-American rock band Fleetwood Mac, released on February 4, 1977.', '1977-02-04', 3, 3, 1);
+    (1, 'Thriller', 30, 'Thriller is the sixth studio album by American singer Michael Jackson, released on November 30, 1982.', '1982-11-30', 1, 1),
+    (2, 'The Dark Side of the Moon', 25, 'The Dark Side of the Moon is the eighth studio album by the English progressive rock band Pink Floyd, released on March 1, 1973.', '1973-03-01', 2, 2),
+    (3, 'Rumours', 20, 'Rumours is the eleventh studio album by British-American rock band Fleetwood Mac, released on February 4, 1977.', '1977-02-04', 3, 1);
 
 -- Tabela: Record_Genre
 INSERT INTO Record_Genre (Record_id, Genre_id)
@@ -93,7 +91,7 @@ INSERT INTO Storage (id, Address_id)
 VALUES
     (1, 2),
     (2, 4),
-    (3, 6);
+    (3, 5);
 
 -- Tabela: Type_Of_Record
 INSERT INTO Type_Of_Record (id, name, color)

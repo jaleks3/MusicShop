@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MusicShop.Data.Models;
+namespace MusicShop.Models;
 
-public partial class Author
+public partial class Artist
 {
     public int Id { get; set; }
 

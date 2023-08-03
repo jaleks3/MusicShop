@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2023-07-28 15:06:32.331
+-- Last modification date: 2023-08-03 09:37:46.667
 
 -- tables
 -- Table: Address
@@ -14,11 +14,18 @@ CREATE TABLE Address (
     CONSTRAINT Address_pk PRIMARY KEY  (id)
 );
 
--- Table: Author
-CREATE TABLE Author (
+-- Table: Artist
+CREATE TABLE Artist (
     id int  NOT NULL,
     name text  NOT NULL,
-    CONSTRAINT Author_pk PRIMARY KEY  (id)
+    CONSTRAINT Artist_pk PRIMARY KEY  (id)
+);
+
+-- Table: Artist_Record
+CREATE TABLE Artist_Record (
+    Artist_id int  NOT NULL,
+    Record_id int  NOT NULL,
+    CONSTRAINT Artist_Record_pk PRIMARY KEY  (Artist_id,Record_id)
 );
 
 -- Table: Customer
@@ -81,7 +88,6 @@ CREATE TABLE Record (
     price int  NOT NULL,
     description text  NOT NULL,
     released date  NOT NULL,
-    Author_id int  NOT NULL,
     Distributor_id int  NOT NULL,
     TypeOfRecord_id int  NOT NULL,
     CONSTRAINT Record_pk PRIMARY KEY  (id)
@@ -125,6 +131,16 @@ CREATE TABLE Type_Of_Record (
 );
 
 -- foreign keys
+-- Reference: Artist_Record_Artist (table: Artist_Record)
+ALTER TABLE Artist_Record ADD CONSTRAINT Artist_Record_Artist
+    FOREIGN KEY (Artist_id)
+    REFERENCES Artist (id);
+
+-- Reference: Artist_Record_Record (table: Artist_Record)
+ALTER TABLE Artist_Record ADD CONSTRAINT Artist_Record_Record
+    FOREIGN KEY (Record_id)
+    REFERENCES Record (id);
+
 -- Reference: Customer_Address (table: Customer)
 ALTER TABLE Customer ADD CONSTRAINT Customer_Address
     FOREIGN KEY (Address_id)
@@ -164,11 +180,6 @@ ALTER TABLE Record_Storage ADD CONSTRAINT RecordStorage_Record
 ALTER TABLE Record_Storage ADD CONSTRAINT RecordStorage_Storage
     FOREIGN KEY (Storage_id)
     REFERENCES Storage (id);
-
--- Reference: Record_Author (table: Record)
-ALTER TABLE Record ADD CONSTRAINT Record_Author
-    FOREIGN KEY (Author_id)
-    REFERENCES Author (id);
 
 -- Reference: Record_Distributor (table: Record)
 ALTER TABLE Record ADD CONSTRAINT Record_Distributor
