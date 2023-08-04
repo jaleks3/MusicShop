@@ -4,6 +4,6 @@ namespace MusicShop.Services
 {
     public interface IRecordsService
     {
-        public Task<IEnumerable<Record>> GetRecords();
+        public Task<ICollection<Record>> GetRecords();
     }
 }

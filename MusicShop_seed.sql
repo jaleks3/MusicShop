@@ -65,6 +65,14 @@ VALUES
     (2, 'The Dark Side of the Moon', 25, 'The Dark Side of the Moon is the eighth studio album by the English progressive rock band Pink Floyd, released on March 1, 1973.', '1973-03-01', 2, 2),
     (3, 'Rumours', 20, 'Rumours is the eleventh studio album by British-American rock band Fleetwood Mac, released on February 4, 1977.', '1977-02-04', 3, 1);
 
+-- Tabela: Artist_Record
+INSERT INTO Artist_Record (Artist_id, Record_id)
+VALUES
+    (1, 1),
+    (2, 1),
+    (2, 2),
+    (3, 3);
+
 -- Tabela: Record_Genre
 INSERT INTO Record_Genre (Record_id, Genre_id)
 VALUES

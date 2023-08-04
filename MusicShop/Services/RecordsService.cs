@@ -11,9 +11,15 @@ namespace MusicShop.Services
         {
             _context = context;
         }
-        public async Task<IEnumerable<Record>> GetRecords()
+        public async Task<ICollection<Record>> GetRecords()
         {
-           return await _context.Records.ToListAsync();
+            return await _context.Records
+                .Include(r => r.TypeOfRecord)
+                .Include(r => r.Distributor)
+                .Include(r => r.Artists)
+                .Include(r => r.Genres)
+                .Include(r => r.RecordStorages)
+                .ToListAsync();
         }
     }
 }
