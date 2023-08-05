@@ -82,7 +82,7 @@ public partial class ProjektContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Name)
-                .HasColumnType("text")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
 
             entity.HasMany(d => d.Records).WithMany(p => p.Artists)
@@ -235,7 +235,7 @@ public partial class ProjektContext : DbContext
                 .HasColumnName("description");
             entity.Property(e => e.DistributorId).HasColumnName("Distributor_id");
             entity.Property(e => e.Name)
-                .HasColumnType("text")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
             entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.Released)

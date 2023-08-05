@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZIqw8W0S2Zr0oIj4POHVFssmVA8GUlsrec1x7nrc5e4Wm9KCBqu47sZ8nhMU37zUaUfg2+EnffI+3vsrQa6G0Q==",
+  "dgSpecHash": "lpfBsvCdN4UHwm3eFei+MmJrMn1FmygW6nDtIJ7bWcAvVfwmYZ3izMTKcF/WTuNVnSijQWpRS0Bpz7oaMh1AyA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kuba\\source\\repos\\jaleks3\\geomusicquiz\\MusicShop\\MusicShop.csproj",
+  "projectFilePath": "C:\\Users\\Kuba\\Source\\Repos\\MusicShop\\MusicShop\\MusicShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kuba\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Kuba\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

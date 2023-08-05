@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kuba\\source\\repos\\jaleks3\\geomusicquiz\\MusicShop\\MusicShop.csproj": {}
+    "C:\\Users\\Kuba\\Source\\Repos\\MusicShop\\MusicShop\\MusicShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kuba\\source\\repos\\jaleks3\\geomusicquiz\\MusicShop\\MusicShop.csproj": {
+    "C:\\Users\\Kuba\\Source\\Repos\\MusicShop\\MusicShop\\MusicShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kuba\\source\\repos\\jaleks3\\geomusicquiz\\MusicShop\\MusicShop.csproj",
+        "projectUniqueName": "C:\\Users\\Kuba\\Source\\Repos\\MusicShop\\MusicShop\\MusicShop.csproj",
         "projectName": "MusicShop",
-        "projectPath": "C:\\Users\\Kuba\\source\\repos\\jaleks3\\geomusicquiz\\MusicShop\\MusicShop.csproj",
+        "projectPath": "C:\\Users\\Kuba\\Source\\Repos\\MusicShop\\MusicShop\\MusicShop.csproj",
         "packagesPath": "C:\\Users\\Kuba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kuba\\source\\repos\\jaleks3\\geomusicquiz\\MusicShop\\obj\\",
+        "outputPath": "C:\\Users\\Kuba\\Source\\Repos\\MusicShop\\MusicShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kuba\\AppData\\Roaming\\NuGet\\NuGet.Config",

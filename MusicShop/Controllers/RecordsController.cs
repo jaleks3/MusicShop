@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicShop.Models;
 using MusicShop.Models.DTOs;
 using MusicShop.Services;
 using System.Linq;
@@ -9,35 +10,36 @@ namespace MusicShop.Controllers
     [ApiController]
     public class RecordsController : ControllerBase
     {
-        private readonly IRecordsService _recordsService;
-        public RecordsController(IRecordsService recordsService)
+        private readonly IDbService _DbService;
+        public RecordsController(IDbService recordsService)
         {
-            _recordsService = recordsService;
+            _DbService = recordsService;
         }
 
-        [HttpGet]
+        [HttpGet("/Records")]
         public async Task<IActionResult> GetRecords()
         {
-            var records = await _recordsService.GetRecords();
-            return Ok(records.Select(e => new GetRecordsDTO
-            {
-                Name = e.Name,
-                Price = e.Price,
-                Description = e.Description,
-                Released = e.Released,
-                Distributor = new GetDistributorDTO
-                {
-                    Name = e.Distributor.Name,
-                },
-                Artists = e.Artists.Select(artist => new GetArtistDTO
-                {
-                    Name = artist.Name,
-                }).ToList(),
-                Genres = e.Genres.Select(genre => new GetGenreDTO
-                {
-                    Name = genre.Name,
-                }).ToList(),
-            }));
+            var records = await _DbService.GetRecords();
+            return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
+        }
+        [HttpGet("/Records/{id}")]
+        public async Task<IActionResult> GetRecord(int id)
+        {
+            if (!await _DbService.DoesRecordExist(id))
+                return NotFound("Record with given ID does not exist");
+
+            var record = await _DbService.GetRecord(id);
+            return Ok(GetRecordDTO.MapRecord(record));
+        }
+        [HttpGet("/Records/Search/{query}")]
+        public async Task<IActionResult> GetRecordsByName(string query)
+        {
+            var RecordsByName = await _DbService.GetRecordsByName(query);
+            var RecordsByArtist = await _DbService.GetRecordsByArtistName(query);
+
+            var records = RecordsByName.Union(RecordsByArtist).ToList();
+
+            return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
     }
 }

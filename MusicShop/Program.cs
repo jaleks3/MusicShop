@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjektContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Projekt")));
-builder.Services.AddScoped<IRecordsService, RecordsService>();
+builder.Services.AddScoped<IDbService, DbService>();
 
 var app = builder.Build();
 
