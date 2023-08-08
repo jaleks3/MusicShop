@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models;
 using MusicShop.Models.DTOs;
 using MusicShop.Services;
@@ -11,9 +12,11 @@ namespace MusicShop.Controllers
     public class RecordsController : ControllerBase
     {
         private readonly IDbService _DbService;
-        public RecordsController(IDbService recordsService)
+        private readonly IMapper _mapper;
+        public RecordsController( IDbService recordsService, IMapper mapper)
         {
             _DbService = recordsService;
+            _mapper = mapper;
         }
 
         [HttpGet("/Records")]

@@ -150,3 +150,5 @@ C:\Users\Kuba\Source\Repos\MusicShop\MusicShop\obj\Debug\net7.0\scopedcss\bundle
 C:\Users\Kuba\Source\Repos\MusicShop\MusicShop\obj\Debug\net7.0\MusicShop.csproj.CopyComplete
 C:\Users\Kuba\Source\Repos\MusicShop\MusicShop\obj\Debug\net7.0\MusicShop.genruntimeconfig.cache
 C:\Users\Kuba\Source\Repos\MusicShop\MusicShop\obj\Debug\net7.0\ref\MusicShop.dll
+C:\Users\Kuba\Source\Repos\MusicShop\MusicShop\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Kuba\Source\Repos\MusicShop\MusicShop\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
