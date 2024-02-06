@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicShop.Models.DTOs;
+using MusicShop.Services;
+using System;
 using System.Collections.Generic;
 
 namespace MusicShop.Models;

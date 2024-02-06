@@ -47,18 +47,59 @@ namespace MusicShop.Controllers
             return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
         [HttpPut("/Records/{id}")]
-        public async Task<IActionResult> UpdateRecord(int id, GetRecordDTO recordDTO)
+        public async Task<IActionResult> UpdateRecord(int id, AddRecordDTO addRecordDTO)
         {
             if (!await _DbService.DoesRecordExist(id))
                 return NotFound("Record with given ID does not exist");
+            if (!await _DbService.DoesDistributorExist(addRecordDTO.DistributorId))
+                return NotFound("Distributor with given ID does not exist");
+            if (!await _DbService.DoesTypeOfRecordExist(addRecordDTO.TypeOfRecordId))
+                return NotFound("Type of record with given ID does not exist");
 
-            var record = await _DbService.GetRecord(id);
-            // Update the record properties based on the provided DTO
-            // ...
+            var record = new Record
+            {
+                Id = id,
+                Name = addRecordDTO.Name,
+                Price = addRecordDTO.Price,
+                Description = addRecordDTO.Description,
+                Released = addRecordDTO.Released,
+                DistributorId = addRecordDTO.DistributorId,
+                Distributor = await _DbService.GetDistributor(addRecordDTO.DistributorId),
+                OrderRecords = await _DbService.GetOrderRecordsByRecordId(id),
+                RecordStorages = await _DbService.GetRecordStoragesByRecordId(id),
+                TypeOfRecordId = addRecordDTO.TypeOfRecordId,
+                TypeOfRecord = await _DbService.GetTypeOfRecord(addRecordDTO.TypeOfRecordId)
+            };
+
             await _DbService.UpdateRecord(record);
 
-            return Ok(GetRecordDTO.MapRecord(record));
+            return NoContent();
         }
+        [HttpPost("/Records")]
+        public async Task<IActionResult> AddRecord(AddRecordDTO addRecordDTO) 
+        {
+            if (!await _DbService.DoesDistributorExist(addRecordDTO.DistributorId))
+                return NotFound("Distributor with given ID does not exist");
+            if (!await _DbService.DoesTypeOfRecordExist(addRecordDTO.TypeOfRecordId))
+                return NotFound("Type of record with given ID does not exist");
 
+            var record = new Record
+            {
+                Name = addRecordDTO.Name,
+                Price = addRecordDTO.Price,
+                Description = addRecordDTO.Description,
+                Released = addRecordDTO.Released,
+                DistributorId = addRecordDTO.DistributorId,
+                Distributor = await _DbService.GetDistributor(addRecordDTO.DistributorId),
+                OrderRecords = null,
+                RecordStorages = null,
+                TypeOfRecordId = addRecordDTO.TypeOfRecordId,
+                TypeOfRecord = await _DbService.GetTypeOfRecord(addRecordDTO.TypeOfRecordId)
+            };
+
+            await _DbService.AddNewRecord(record);
+
+            return Created("Succesfuly created:",record);
+        }
     }
 }

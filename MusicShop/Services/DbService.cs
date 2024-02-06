@@ -160,5 +160,49 @@ namespace MusicShop.Services
         {
             throw new NotImplementedException();
         }
+        //distributor
+        async Task<Models.Distributor> IDbService.GetDistributor(int id)
+        {
+            return await _context.Distributors.FirstOrDefaultAsync(e => e.Id == id);
+        }
+        async Task<bool> IDbService.DoesDistributorExist(int id)
+        {
+            return await (_context.Distributors.AnyAsync(e => e.Id == id));
+        }
+        //Type of record
+        async Task<TypeOfRecord> IDbService.GetTypeOfRecord(int id)
+        {
+            return await _context.TypeOfRecords.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        async Task<bool> IDbService.DoesTypeOfRecordExist(int id)
+        {
+            return await _context.TypeOfRecords.AnyAsync(e => e.Id == id);
+        }
+        //record storages
+        async Task<ICollection<RecordStorage>> IDbService.GetRecordStoragesByRecordId(int id)
+        {
+            return await _context.RecordStorages
+                .Include(e => e.RecordId)
+                .Include(e => e.StorageId)
+                .Include(e => e.Record)
+                .Include(e => e.Storage)
+                .Include(e => e.Quantity)
+                .Where(e => e.RecordId == id)
+                .ToListAsync();
+        }
+
+        //record orders
+        async Task<ICollection<OrderRecord>> IDbService.GetOrderRecordsByRecordId(int id)
+        {
+            return await _context.OrderRecords
+                .Include(e => e.RecordId)
+                .Include(e => e.Record)
+                .Include(e => e.OrderId)
+                .Include(e => e.Order)
+                .Include(e => e.Quantity)
+                .Where(e => e.RecordId == id)
+                .ToListAsync();
+        }
     }
 }
