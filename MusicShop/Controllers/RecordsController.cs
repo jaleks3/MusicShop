@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MusicShop.Models;
 using MusicShop.Models.DTOs;
 using MusicShop.Services;
@@ -34,13 +35,16 @@ namespace MusicShop.Controllers
             var record = await _DbService.GetRecord(id);
             return Ok(GetRecordDTO.MapRecord(record));
         }
-        [HttpGet("/Records/Search/{query}")]
-        public async Task<IActionResult> GetRecordsByName(string query)
+        [HttpGet("/Records/Search/{name}")]
+        public async Task<IActionResult> GetRecordsByName(string name)
         {
-            var RecordsByName = await _DbService.GetRecordsByName(query);
-            var RecordsByArtist = await _DbService.GetRecordsByArtistName(query);
+            var RecordsByName = await _DbService.GetRecordsByName(name);
+            var RecordsByArtist = await _DbService.GetRecordsByArtistName(name);
 
             var records = RecordsByName.Union(RecordsByArtist).ToList();
+
+            if (records.IsNullOrEmpty())
+                return NotFound("No results for album named: " + name);
 
             return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
