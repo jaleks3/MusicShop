@@ -13,11 +13,9 @@ namespace MusicShop.Controllers
     public class RecordsController : ControllerBase
     {
         private readonly IDbService _DbService;
-        private readonly IMapper _mapper;
-        public RecordsController( IDbService recordsService, IMapper mapper)
+        public RecordsController( IDbService recordsService)
         {
             _DbService = recordsService;
-            _mapper = mapper;
         }
 
         [HttpGet("/Records")]
@@ -48,5 +46,19 @@ namespace MusicShop.Controllers
 
             return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
+        [HttpPut("/Records/{id}")]
+        public async Task<IActionResult> UpdateRecord(int id, GetRecordDTO recordDTO)
+        {
+            if (!await _DbService.DoesRecordExist(id))
+                return NotFound("Record with given ID does not exist");
+
+            var record = await _DbService.GetRecord(id);
+            // Update the record properties based on the provided DTO
+            // ...
+            await _DbService.UpdateRecord(record);
+
+            return Ok(GetRecordDTO.MapRecord(record));
+        }
+
     }
 }

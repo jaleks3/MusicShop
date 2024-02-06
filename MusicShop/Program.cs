@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjektContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Projekt")));
 builder.Services.AddScoped<IDbService, DbService>();
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 
 var app = builder.Build();
 

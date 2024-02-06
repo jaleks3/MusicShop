@@ -2,6 +2,7 @@
 using Microsoft.Identity.Client.Extensions.Msal;
 using MusicShop.Data;
 using MusicShop.Models;
+using MusicShop.Models.DTOs;
 
 namespace MusicShop.Services
 {
@@ -12,6 +13,7 @@ namespace MusicShop.Services
         {
             _context = context;
         }
+        //records
         public async Task<ICollection<Record>> GetRecords()
         {
             return await _context.Records
@@ -21,46 +23,6 @@ namespace MusicShop.Services
                 .Include(r => r.Genres)
                 .Include(r => r.RecordStorages)
                 .ToListAsync();
-        }
-
-        async Task IDbService.AddNewRecord(Record record)
-        {
-            _context.Records.AddAsync(record);
-            _context.SaveChangesAsync();
-        }
-
-        async Task IDbService.AddNewStorage(Models.Storage storage)
-        {
-            _context.Storages.AddAsync(storage);
-            _context.SaveChangesAsync();
-        }
-
-        async Task IDbService.DeleteRecord(int id)
-        {
-            var record = await _context.Records.FirstOrDefaultAsync(r => r.Id == id);
-
-            _context.Records.Remove(record);
-            await _context.SaveChangesAsync();
-
-        }
-
-        async Task IDbService.DeleteStorage(int id)
-        {
-            var storage = await _context.Storages.FirstOrDefaultAsync(r => r.Id == id);
-
-            _context.Storages.Remove(storage);
-            await _context.SaveChangesAsync();
-        }
-
-        async Task<bool> IDbService.DoesRecordExist(int id)
-        {
-            return await _context.Records.AnyAsync(e => e.Id == id);
-        }
-
-
-        async Task<bool> IDbService.DoesStorageExist(int id)
-        {
-            return await _context.Storages.AnyAsync(e => e.Id == id);
         }
 
         async Task<Record?> IDbService.GetRecord(int id)
@@ -109,6 +71,64 @@ namespace MusicShop.Services
                 .Where(r => EF.Functions.Like(r.Name, $"%{name}%"))
                 .ToListAsync();
         }
+        async Task IDbService.UpdateRecord(Record record)
+        {
+            _context.Update(record);
+            await _context.SaveChangesAsync();
+        }
+        async Task IDbService.AddNewRecord(Record record)
+        {
+            _context.Records.AddAsync(record);
+            _context.SaveChangesAsync();
+        }
+        async Task IDbService.DeleteRecord(int id)
+        {
+            var record = await _context.Records.FirstOrDefaultAsync(r => r.Id == id);
+
+            _context.Records.Remove(record);
+            await _context.SaveChangesAsync();
+
+        }
+        async Task<bool> IDbService.DoesRecordExist(int id)
+        {
+            return await _context.Records.AnyAsync(e => e.Id == id);
+        }
+
+
+        //artists
+        async Task IDbService.AddNewArtist(Artist artist)
+        {
+            throw new NotImplementedException();
+        }
+        async Task IDbService.DeleteArtist(int id)
+        {
+            throw new NotImplementedException();
+        }
+        async Task<bool> IDbService.DoesArtistExist(int id)
+        {
+            return await _context.Artists.AnyAsync(e => e.Id == id);
+        }
+        async Task<Artist> IDbService.GetArtist(int id)
+        {
+            return _context.Artists.FirstOrDefault(e => e.Id == id);
+        }
+        async Task IDbService.UpdateArtist(AddArtistDTO artistDto)
+        {
+            throw new NotImplementedException();
+        }
+        //storages
+        async Task IDbService.AddNewStorage(Models.Storage storage)
+        {
+            _context.Storages.AddAsync(storage);
+            _context.SaveChangesAsync();
+        }
+        async Task IDbService.DeleteStorage(int id)
+        {
+            var storage = await _context.Storages.FirstOrDefaultAsync(r => r.Id == id);
+
+            _context.Storages.Remove(storage);
+            await _context.SaveChangesAsync();
+        }
         async Task<Models.Storage> IDbService.GetStorage(int id)
         {
             return await _context.Storages
@@ -131,11 +151,14 @@ namespace MusicShop.Services
                 .Where(rs => rs.RecordId == id)
                 .SumAsync(rs => rs.Quantity);
         }
-
-        async Task IDbService.UpdateRecord(Record record)
+        async Task<bool> IDbService.DoesStorageExist(int id)
         {
-            _context.Update(record);
-            await _context.SaveChangesAsync();
+            return await _context.Storages.AnyAsync(e => e.Id == id);
+        }
+
+        Task IDbService.UpdateArtist(Artist artist)
+        {
+            throw new NotImplementedException();
         }
     }
 }

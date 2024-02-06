@@ -1,9 +1,11 @@
 ﻿using MusicShop.Models;
+using MusicShop.Models.DTOs;
 
 namespace MusicShop.Services
 {
     public interface IDbService
     {
+        //records
         public Task<ICollection<Record>> GetRecords();
         public Task<bool> DoesRecordExist(int id);
         public Task<Record?> GetRecord(int id);
@@ -13,11 +15,20 @@ namespace MusicShop.Services
         public Task<ICollection<Record>?> GetRecordsByArtistName(string name);
         public Task<ICollection<Record>?> GetRecordsByArtistId(int id);
         public Task<ICollection<Record>?> GetRecordsByName(string name);
-        public Task<ICollection<Storage>> GetStorages();
-        public Task<Storage> GetStorage(int id);
+        //storages
         public Task AddNewStorage(Storage storage);
         public Task DeleteStorage(int id);
+        
+        public Task<ICollection<Storage>> GetStorages();
+        public Task<Storage> GetStorage(int id);
         public Task<bool> DoesStorageExist(int id);
         public Task<int> QuantityOfRecordsInStock(int id);
+        //artists
+        public Task AddNewArtist(Artist artist);
+        public Task DeleteArtist(int id);
+        public Task<Artist> GetArtist(int id);
+        public Task UpdateArtist(Artist artist);
+        public Task<bool> DoesArtistExist(int id);
+        public Task UpdateArtist(AddArtistDTO artistDto);
     }
 }
