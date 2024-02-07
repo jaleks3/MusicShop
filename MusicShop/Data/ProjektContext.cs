@@ -14,6 +14,7 @@ public partial class ProjektContext : DbContext
     public ProjektContext(DbContextOptions<ProjektContext> options)
         : base(options)
     {
+
     }
 
     public virtual DbSet<Address> Addresses { get; set; }
@@ -54,7 +55,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Address");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.City)
                 .HasColumnType("text")
@@ -79,7 +80,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Artist");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasColumnType("nvarchar(max)")
@@ -112,7 +113,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Customer");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.AddressId).HasColumnName("Address_id");
             entity.Property(e => e.DiscountId).HasColumnName("Discount_id");
@@ -140,7 +141,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Discount");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()  
                 .HasColumnName("id");
         });
 
@@ -151,7 +152,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Distributor");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasColumnType("text")
@@ -165,7 +166,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Genre");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("text")
@@ -182,7 +183,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Order");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.AddressId).HasColumnName("Address_id");
             entity.Property(e => e.FulfillAt).HasColumnType("datetime");
@@ -224,11 +225,12 @@ public partial class ProjektContext : DbContext
         modelBuilder.Entity<Record>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Record_pk");
+            entity.Property<int>(e => e.Id).ValueGeneratedOnAdd();
 
             entity.ToTable("Record");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("text")
@@ -300,7 +302,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Status");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasColumnType("text")
@@ -314,7 +316,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Storage");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.AddressId).HasColumnName("Address_id");
 
@@ -331,7 +333,7 @@ public partial class ProjektContext : DbContext
             entity.ToTable("Type_Of_Record");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Color)
                 .HasColumnType("text")

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models.DTOs;
 using MusicShop.Models;
 using MusicShop.Services;

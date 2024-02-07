@@ -3,6 +3,7 @@ using MusicShop.Data;
 using MusicShop.Services;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +14,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjektContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Projekt")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Projekt"))
+                    .EnableSensitiveDataLogging()
+                   .LogTo(Console.WriteLine, LogLevel.Information));
 builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddMvc().AddJsonOptions(o =>
 {
     o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
+
 
 
 var app = builder.Build();
