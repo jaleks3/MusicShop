@@ -145,12 +145,7 @@ namespace MusicShop.Services
                 .ToListAsync();
         }
 
-        async Task<int> IDbService.QuantityOfRecordsInStock(int id)
-        {
-            return await _context.RecordStorages
-                .Where(rs => rs.RecordId == id)
-                .SumAsync(rs => rs.Quantity);
-        }
+        
         async Task<bool> IDbService.DoesStorageExist(int id)
         {
             return await _context.Storages.AnyAsync(e => e.Id == id);
@@ -191,7 +186,12 @@ namespace MusicShop.Services
                 .Where(e => e.RecordId == id)
                 .ToListAsync();
         }
-
+        async Task<int> IDbService.QuantityOfRecordsInStock(int id)
+        {
+            return await _context.RecordStorages
+                .Where(rs => rs.RecordId == id)
+                .SumAsync(rs => rs.Quantity);
+        }
         //record orders
         async Task<ICollection<OrderRecord>> IDbService.GetOrderRecordsByRecordId(int id)
         {

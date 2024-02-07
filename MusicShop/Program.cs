@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using MusicShop.Data;
 using MusicShop.Services;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjektContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Projekt")));
 builder.Services.AddScoped<IDbService, DbService>();
+builder.Services.AddMvc().AddJsonOptions(o =>
+{
+    o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 
 
 var app = builder.Build();
