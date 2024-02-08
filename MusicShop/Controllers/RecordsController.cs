@@ -83,8 +83,17 @@ namespace MusicShop.Controllers
                 return NotFound($"Distributor with given ID - {addRecordDTO.DistributorId} does not exist");
             if (!await _DbService.DoesTypeOfRecordExist(addRecordDTO.TypeOfRecordId))
                 return NotFound($"Type of record with given ID - {addRecordDTO.TypeOfRecordId} does not exist");
-            //todo artist check
-            //todo genre check
+            
+            var artists = new List<Artist>();
+            foreach (var artistId in addRecordDTO.ArtistsId) 
+            {
+                if (!await _DbService.DoesArtistExist(artistId))
+                    return NotFound($"Artist with given ID - {artistId} does not exist");
+
+                var artist = await _DbService.GetArtist(artistId);
+
+                artists.Add(artist);
+            }
 
             var record = new Record
             {
@@ -94,7 +103,7 @@ namespace MusicShop.Controllers
                 Description = addRecordDTO.Description,
                 Released = addRecordDTO.Released,
                 DistributorId = addRecordDTO.DistributorId,
-                //Artists = await _DbService.GetArtist() 
+                Artists = artists,
                 //Genres = 
                 Distributor = await _DbService.GetDistributor(addRecordDTO.DistributorId),
                 OrderRecords = null,
