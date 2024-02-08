@@ -73,13 +73,19 @@ namespace MusicShop.Services
         }
         async Task IDbService.UpdateRecord(Record record)
         {
+            var existingEntity = _context.Records.Find(record.Id);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).State = EntityState.Detached;
+            }
             _context.Update(record);
             await _context.SaveChangesAsync();
         }
+
         async Task IDbService.AddNewRecord(Record record)
         {
-            _context.Records.AddAsync(record);
-            _context.SaveChangesAsync();
+            await _context.Records.AddAsync(record);
+            await _context.SaveChangesAsync();
         }
         async Task IDbService.DeleteRecord(int id)
         {
@@ -119,8 +125,8 @@ namespace MusicShop.Services
         //storages
         async Task IDbService.AddNewStorage(Models.Storage storage)
         {
-            _context.Storages.AddAsync(storage);
-            _context.SaveChangesAsync();
+            await _context.Storages.AddAsync(storage);
+            await _context.SaveChangesAsync();
         }
         async Task IDbService.DeleteStorage(int id)
         {

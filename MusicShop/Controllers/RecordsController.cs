@@ -79,6 +79,8 @@ namespace MusicShop.Controllers
                 genres.Add(genre);
             }
 
+            var orderRecords = new List<OrderRecord>();
+            
             var record = new Record
             {
                 Id = recordId,
@@ -90,8 +92,8 @@ namespace MusicShop.Controllers
                 Artists = artists,
                 Genres = genres,
                 Distributor = await _DbService.GetDistributor(addRecordDTO.DistributorId),
-                OrderRecords = null, //todo
-                RecordStorages = null, //todo
+                OrderRecords = oldRecord.OrderRecords, 
+                RecordStorages = oldRecord.RecordStorages, 
                 TypeOfRecordId = addRecordDTO.TypeOfRecordId,
                 TypeOfRecord = await _DbService.GetTypeOfRecord(addRecordDTO.TypeOfRecordId)
             };
