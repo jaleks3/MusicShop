@@ -36,7 +36,12 @@ namespace MusicShop.Controllers
         [HttpDelete(("api/Record/{recordId}"))]
         public async Task<IActionResult> DeleteRecord(int recordId)
         {
-            return Ok();
+            if (!await _DbService.DoesRecordExist(recordId))
+                return NotFound($"Record wth given ID - {recordId} does not exists");
+
+            await _DbService.DeleteRecord(recordId);
+
+            return Ok("Succesfuly deleted");
         }
 
         [HttpGet("api/Record/Search/{name}")]
