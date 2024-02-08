@@ -16,7 +16,7 @@ namespace MusicShop.Controllers
             _DbService = dbService;
         }
 
-        [HttpGet]
+        [HttpGet("api/Artist")]
         public async Task<IActionResult> GetAllArtists()
         {
             var artists = await _DbService.GetArtists();
@@ -24,25 +24,25 @@ namespace MusicShop.Controllers
             return Ok(artists.Select(e => new GetArtistDTO {Name = e.Name }));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetArtist(int id)
+        [HttpGet("api/Artist/{artistId}")]
+        public async Task<IActionResult> GetArtist(int artistId)
         {
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpPost("api/Artist/{artistId}")]
         public async Task<IActionResult> CreateArtist(ArtistDTO artistDTO)
         {
             return NotFound();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("api/Artist/{artistId}")]
         public async Task<IActionResult> UpdateArtist(int id, ArtistDTO artistDTO)
         {
             return NotFound();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("api/Artist/{artistId}")]
         public async Task<IActionResult> DeleteArtist(int id)
         {
             return NotFound();
