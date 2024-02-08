@@ -30,7 +30,7 @@ namespace MusicShop.Controllers
                 return NotFound($"Record wth given ID - {recordId} does not exists");
 
             var record = await _DbService.GetRecord(recordId);
-            return Ok(record);
+            return Ok(GetRecordDTO.MapRecord(record));
         }
         [HttpGet("/Record/Search/{name}")]
         public async Task<IActionResult> GetRecordsByName(string name)
