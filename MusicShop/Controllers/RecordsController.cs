@@ -100,7 +100,7 @@ namespace MusicShop.Controllers
 
             await _DbService.UpdateRecord(record);
 
-            return Ok($"Succesfuly updated:\nNew record: {record.ToString()}\nOld record: {oldRecord.ToString}");
+            return Ok("Succesfuly updated");
         }
         [HttpPost("/Record/{recordId}")]
         public async Task<IActionResult> AddRecord(int recordId, AddRecordDTO addRecordDTO) 
