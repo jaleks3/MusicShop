@@ -27,7 +27,12 @@ namespace MusicShop.Controllers
         [HttpGet("api/Artist/{artistId}")]
         public async Task<IActionResult> GetArtist(int artistId)
         {
-            return NotFound();
+            if(!await _DbService.DoesArtistExist(artistId))
+                return NotFound($"Artist with given ID - {artistId} does not exist");
+
+            var artist = await _DbService.GetArtist(artistId);
+
+            return Ok(new GetArtistDTO { Name = artist.Name });
         }
 
         [HttpPost("api/Artist/{artistId}")]
