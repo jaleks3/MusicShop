@@ -45,34 +45,60 @@ namespace MusicShop.Controllers
 
             return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
-        [HttpPut("/Records/{id}")]
-        public async Task<IActionResult> UpdateRecord(int id, AddRecordDTO addRecordDTO)
+        [HttpPut("/Records/{recordId}")]
+        public async Task<IActionResult> UpdateRecord(int recordId, AddRecordDTO addRecordDTO)
         {
-            if (!await _DbService.DoesRecordExist(id))
-                return NotFound("Record with given ID does not exist");
+            if (!await _DbService.DoesRecordExist(recordId))
+                return NotFound($"Record wth given ID - {recordId} does not exists");
             if (!await _DbService.DoesDistributorExist(addRecordDTO.DistributorId))
-                return NotFound("Distributor with given ID does not exist");
+                return NotFound($"Distributor with given ID - {addRecordDTO.DistributorId} does not exist");
             if (!await _DbService.DoesTypeOfRecordExist(addRecordDTO.TypeOfRecordId))
-                return NotFound("Type of record with given ID does not exist");
+                return NotFound($"Type of record with given ID - {addRecordDTO.TypeOfRecordId} does not exist");
+
+            var oldRecord = await _DbService.GetRecord(recordId);
+
+            var artists = new List<Artist>();
+            foreach (var artistId in addRecordDTO.ArtistsId)
+            {
+                if (!await _DbService.DoesArtistExist(artistId))
+                    return NotFound($"Artist with given ID - {artistId} does not exist");
+
+                var artist = await _DbService.GetArtist(artistId);
+
+                artists.Add(artist);
+            }
+
+            var genres = new List<Genre>();
+            foreach (var genreId in addRecordDTO.GenresId)
+            {
+                if (!await _DbService.DoesArtistExist(genreId))
+                    return NotFound($"Genre with given ID - {genreId} does not exist");
+
+                var genre = await _DbService.GetGenre(genreId);
+
+                genres.Add(genre);
+            }
 
             var record = new Record
             {
-                Id = id,
+                Id = recordId,
                 Name = addRecordDTO.Name,
                 Price = addRecordDTO.Price,
                 Description = addRecordDTO.Description,
                 Released = addRecordDTO.Released,
                 DistributorId = addRecordDTO.DistributorId,
+                Artists = artists,
+                Genres = genres,
                 Distributor = await _DbService.GetDistributor(addRecordDTO.DistributorId),
-                OrderRecords = await _DbService.GetOrderRecordsByRecordId(id),
-                RecordStorages = await _DbService.GetRecordStoragesByRecordId(id),
+                OrderRecords = null, //todo
+                RecordStorages = null, //todo
                 TypeOfRecordId = addRecordDTO.TypeOfRecordId,
                 TypeOfRecord = await _DbService.GetTypeOfRecord(addRecordDTO.TypeOfRecordId)
             };
 
             await _DbService.UpdateRecord(record);
 
-            return NoContent();
+            return Ok($"Succesfuly updated:\nNew record: {record.ToString()}\nOld record: {oldRecord.ToString}");
         }
         [HttpPost("/Records/{recordId}")]
         public async Task<IActionResult> AddRecord(int recordId, AddRecordDTO addRecordDTO) 
