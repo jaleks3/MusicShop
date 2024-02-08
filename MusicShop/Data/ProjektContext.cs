@@ -225,7 +225,6 @@ public partial class ProjektContext : DbContext
         modelBuilder.Entity<Record>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Record_pk");
-            entity.Property<int>(e => e.Id).ValueGeneratedOnAdd();
 
             entity.ToTable("Record");
 

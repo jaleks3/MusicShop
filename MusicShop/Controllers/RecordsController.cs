@@ -74,16 +74,19 @@ namespace MusicShop.Controllers
 
             return NoContent();
         }
-        [HttpPost("/Records")]
-        public async Task<IActionResult> AddRecord(AddRecordDTO addRecordDTO) 
+        [HttpPost("/Records/{recordId}")]
+        public async Task<IActionResult> AddRecord(int recordId, AddRecordDTO addRecordDTO) 
         {
+            if(await _DbService.DoesRecordExist(recordId))
+                return NotFound($"Record wth given ID - {recordId} already exists");
             if (!await _DbService.DoesDistributorExist(addRecordDTO.DistributorId))
-                return NotFound("Distributor with given ID does not exist");
+                return NotFound($"Distributor with given ID - {addRecordDTO.DistributorId} does not exist");
             if (!await _DbService.DoesTypeOfRecordExist(addRecordDTO.TypeOfRecordId))
-                return NotFound("Type of record with given ID does not exist");
+                return NotFound($"Type of record with given ID - {addRecordDTO.TypeOfRecordId} does not exist");
 
             var record = new Record
             {
+                Id = recordId,
                 Name = addRecordDTO.Name,
                 Price = addRecordDTO.Price,
                 Description = addRecordDTO.Description,
