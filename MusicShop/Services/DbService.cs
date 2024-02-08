@@ -116,10 +116,6 @@ namespace MusicShop.Services
         {
             throw new NotImplementedException();
         }
-        Task<ICollection<Artist>> IDbService.GetArtistsByIds(IEnumerable<int> ids)
-        {
-            throw new NotImplementedException();
-        }
         //storages
         async Task IDbService.AddNewStorage(Models.Storage storage)
         {
@@ -209,19 +205,13 @@ namespace MusicShop.Services
                 .ToListAsync();
         }
         //genre
-        Task<bool> IDbService.DoesGenreExist(int id)
+        async Task<bool> IDbService.DoesGenreExist(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Genres.AnyAsync(r => r.Id == id);
         }
-
-        Task<bool> IDbService.GetGenre(int id)
+        async Task<Genre> IDbService.GetGenre(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Genre>> IDbService.GetGenres(IEnumerable<int> ids)
-        {
-            throw new NotImplementedException();
+            return await _context.Genres.FirstOrDefaultAsync(r => r.Id == id);
         }
     }
 }
