@@ -48,9 +48,14 @@ namespace MusicShop.Controllers
         }
 
         [HttpDelete("api/Artist/{artistId}")]
-        public async Task<IActionResult> DeleteArtist(int id)
+        public async Task<IActionResult> DeleteArtist(int artistId)
         {
-            return NotFound();
+            if (!await _DbService.DoesArtistExist(artistId))
+                return NotFound($"Artist with given ID - {artistId} does not exist");
+
+            await _DbService.DeleteArtist(artistId);
+
+            return Ok("Succesfuly deleted");
         }
     }
 }
