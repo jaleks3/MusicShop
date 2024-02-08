@@ -102,6 +102,10 @@ namespace MusicShop.Services
 
 
         //artists
+        async Task<ICollection<Artist>> IDbService.GetArtists()
+        {
+            return await _context.Artists.ToListAsync();
+        }
         async Task IDbService.AddNewArtist(Artist artist)
         {
             throw new NotImplementedException();
@@ -219,5 +223,7 @@ namespace MusicShop.Services
         {
             return await _context.Genres.FirstOrDefaultAsync(r => r.Id == id);
         }
+
+        
     }
 }

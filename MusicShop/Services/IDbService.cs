@@ -29,6 +29,7 @@ namespace MusicShop.Services
         public Task<Artist> GetArtist(int id);
         public Task UpdateArtist(Artist artist);
         public Task<bool> DoesArtistExist(int id);
+        public Task<ICollection<Artist>> GetArtists();
         public Task UpdateArtist(AddArtistDTO artistDto);
         //Distributor
         public Task<Distributor> GetDistributor(int id);

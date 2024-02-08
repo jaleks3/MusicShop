@@ -19,7 +19,9 @@ namespace MusicShop.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllArtists()
         {
-            return NotFound();
+            var artists = await _DbService.GetArtists();
+
+            return Ok(artists.Select(e => new GetArtistDTO {Name = e.Name }));
         }
 
         [HttpGet("{id}")]
