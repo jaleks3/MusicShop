@@ -108,7 +108,8 @@ namespace MusicShop.Services
         }
         async Task IDbService.AddNewArtist(Artist artist)
         {
-            throw new NotImplementedException();
+            await _context.Artists.AddAsync(artist);
+            await _context.SaveChangesAsync();
         }
         async Task IDbService.DeleteArtist(int id)
         {

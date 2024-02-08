@@ -6,7 +6,7 @@ using MusicShop.Services;
 namespace MusicShop.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     public class ArtistsController : ControllerBase
     {
         private readonly IDbService _DbService;
@@ -16,7 +16,7 @@ namespace MusicShop.Controllers
             _DbService = dbService;
         }
 
-        [HttpGet("api/Artist")]
+        [HttpGet("/Artist")]
         public async Task<IActionResult> GetAllArtists()
         {
             var artists = await _DbService.GetArtists();
@@ -24,7 +24,7 @@ namespace MusicShop.Controllers
             return Ok(artists.Select(e => new GetArtistDTO {Name = e.Name }));
         }
 
-        [HttpGet("api/Artist/{artistId}")]
+        [HttpGet("/Artist/{artistId}")]
         public async Task<IActionResult> GetArtist(int artistId)
         {
             if(!await _DbService.DoesArtistExist(artistId))
@@ -35,19 +35,24 @@ namespace MusicShop.Controllers
             return Ok(new GetArtistDTO { Name = artist.Name });
         }
 
-        [HttpPost("api/Artist/{artistId}")]
-        public async Task<IActionResult> CreateArtist(ArtistDTO artistDTO)
+        [HttpPost("/Artist")]
+        public async Task<IActionResult> CreateArtist(String name)
         {
-            return NotFound();
+            var artist = new Artist { Name = name };
+
+            await _DbService.AddNewArtist(artist);
+
+            return Ok(artist);
         }
 
-        [HttpPut("api/Artist/{artistId}")]
+
+        [HttpPut("/Artist/{artistId}")]
         public async Task<IActionResult> UpdateArtist(int id, ArtistDTO artistDTO)
         {
             return NotFound();
         }
 
-        [HttpDelete("api/Artist/{artistId}")]
+        [HttpDelete("/Artist/{artistId}")]
         public async Task<IActionResult> DeleteArtist(int artistId)
         {
             if (!await _DbService.DoesArtistExist(artistId))

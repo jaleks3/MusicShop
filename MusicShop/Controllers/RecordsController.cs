@@ -17,13 +17,13 @@ namespace MusicShop.Controllers
             _DbService = recordsService;
         }
 
-        [HttpGet("api/Record")]
+        [HttpGet("/Record")]
         public async Task<IActionResult> GetRecords()
         {
             var records = await _DbService.GetRecords();
             return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
-        [HttpGet("api/Record/{recordId}")]
+        [HttpGet("/Record/{recordId}")]
         public async Task<IActionResult> GetRecord(int recordId)
         {
             if (!await _DbService.DoesRecordExist(recordId))
@@ -33,7 +33,7 @@ namespace MusicShop.Controllers
             return Ok(GetRecordDTO.MapRecord(record));
         }
 
-        [HttpDelete(("api/Record/{recordId}"))]
+        [HttpDelete(("/Record/{recordId}"))]
         public async Task<IActionResult> DeleteRecord(int recordId)
         {
             if (!await _DbService.DoesRecordExist(recordId))
@@ -44,7 +44,7 @@ namespace MusicShop.Controllers
             return Ok("Succesfuly deleted");
         }
 
-        [HttpGet("api/Record/Search/{name}")]
+        [HttpGet("/Record/Search/{name}")]
         public async Task<IActionResult> GetRecordsByName(string name)
         {
             var RecordsByName = await _DbService.GetRecordsByName(name);
@@ -57,7 +57,7 @@ namespace MusicShop.Controllers
 
             return Ok(records.Select(e => GetRecordDTO.MapRecord(e)));
         }
-        [HttpPut("api/Record/{recordId}")]
+        [HttpPut("/Record/{recordId}")]
         public async Task<IActionResult> UpdateRecord(int recordId, AddRecordDTO addRecordDTO)
         {
             if (!await _DbService.DoesRecordExist(recordId))
@@ -114,7 +114,7 @@ namespace MusicShop.Controllers
 
             return Ok("Succesfuly updated");
         }
-        [HttpPost("api/Record/{recordId}")]
+        [HttpPost("/Record/{recordId}")]
         public async Task<IActionResult> AddRecord(int recordId, AddRecordDTO addRecordDTO) 
         {
             if(await _DbService.DoesRecordExist(recordId))
