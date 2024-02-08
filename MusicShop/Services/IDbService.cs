@@ -30,6 +30,7 @@ namespace MusicShop.Services
         public Task UpdateArtist(Artist artist);
         public Task<bool> DoesArtistExist(int id);
         public Task UpdateArtist(AddArtistDTO artistDto);
+        public Task<ICollection<Artist>> GetArtistsByIds(IEnumerable<int> ids);
         //Distributor
         public Task<Distributor> GetDistributor(int id);
         public Task<bool> DoesDistributorExist(int id);
@@ -40,5 +41,10 @@ namespace MusicShop.Services
         public Task<ICollection<RecordStorage>> GetRecordStoragesByRecordId(int id);
         //order records
         public Task<ICollection<OrderRecord>> GetOrderRecordsByRecordId(int id);
+        //genre
+        public Task<bool> DoesGenreExist(int id);
+        public Task<bool> GetGenre(int id);
+        public Task<IEnumerable<Genre>> GetGenres(IEnumerable<int> ids);
+
     }
 }

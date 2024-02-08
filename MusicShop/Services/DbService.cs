@@ -116,6 +116,10 @@ namespace MusicShop.Services
         {
             throw new NotImplementedException();
         }
+        Task<ICollection<Artist>> IDbService.GetArtistsByIds(IEnumerable<int> ids)
+        {
+            throw new NotImplementedException();
+        }
         //storages
         async Task IDbService.AddNewStorage(Models.Storage storage)
         {
@@ -203,6 +207,21 @@ namespace MusicShop.Services
                 .Include(e => e.Quantity)
                 .Where(e => e.RecordId == id)
                 .ToListAsync();
+        }
+        //genre
+        Task<bool> IDbService.DoesGenreExist(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IDbService.GetGenre(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Genre>> IDbService.GetGenres(IEnumerable<int> ids)
+        {
+            throw new NotImplementedException();
         }
     }
 }
