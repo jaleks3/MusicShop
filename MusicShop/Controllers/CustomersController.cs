@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MusicShop.Models;
+using MusicShop.Models.DTOs;
 using MusicShop.Services;
 
 namespace MusicShop.Controllers
@@ -13,7 +14,7 @@ namespace MusicShop.Controllers
         {
             _DbService = dbService;
         }
-        [HttpGet("/Customer")]
+        [HttpGet("/Customer/{customerId}")]
         public async Task<IActionResult> GetCustomer(int customerId)
         {
             if (!await _DbService.DoesCustomerExist(customerId))
@@ -21,6 +22,31 @@ namespace MusicShop.Controllers
 
             var customer = await _DbService.GetCustomer(customerId);
 
+            return Ok(customer);
+        }
+        [HttpPut("/Customer/{customerId}")]
+        public async Task<IActionResult> UpdateCustomer(int customerId, AddCustomerDTO addCustomerDTO) 
+        {
+            if (!await _DbService.DoesCustomerExist(customerId))
+                return NotFound($"Customer wth given ID - {customerId} does not exists");
+
+            var customer = new Customer
+            {
+                Name = addCustomerDTO.Name,
+                Surname = addCustomerDTO.Surname,
+                Address = new Address
+                {
+                    City = addCustomerDTO.addAddressDTO.City,
+                    Country = addCustomerDTO.addAddressDTO.Country,
+                    State = addCustomerDTO.addAddressDTO.State,
+                    Postcode = addCustomerDTO.addAddressDTO.Postcode,
+                    StreetName = addCustomerDTO.addAddressDTO.StreetName,
+                    StreetNumber = addCustomerDTO.addAddressDTO.StreetNumber
+                }
+            };
+
+            await _DbService.UpdateCustomer(customer);
+            
             return Ok(customer);
         }
     }

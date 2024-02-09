@@ -250,5 +250,15 @@ namespace MusicShop.Services
             await _context.SaveChangesAsync();
         }
 
+        async Task IDbService.UpdateCustomer(Customer customer)
+        {
+            var existingEntity = _context.Customers.Find(customer.Id);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).State = EntityState.Detached;
+            }
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+        }
     }
 }

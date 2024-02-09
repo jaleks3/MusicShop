@@ -1,6 +1,6 @@
 ﻿namespace MusicShop.Models.DTOs
 {
-    public class AddAdressDTO
+    public class AddAddressDTO
     {
         public string City { get; set; } = null!;
 
