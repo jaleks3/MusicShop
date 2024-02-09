@@ -12,9 +12,9 @@ namespace MusicShop.Controllers
     public class RecordsController : ControllerBase
     {
         private readonly IDbService _DbService;
-        public RecordsController( IDbService recordsService)
+        public RecordsController( IDbService dbService)
         {
-            _DbService = recordsService;
+            _DbService = dbService;
         }
 
         [HttpGet("/Record")]

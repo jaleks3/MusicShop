@@ -18,7 +18,6 @@ namespace MusicShop.Services
         //storages
         public Task AddNewStorage(Storage storage);
         public Task DeleteStorage(int id);
-        
         public Task<ICollection<Storage>> GetStorages();
         public Task<Storage> GetStorage(int id);
         public Task<bool> DoesStorageExist(int id);
@@ -44,7 +43,9 @@ namespace MusicShop.Services
         //genre
         public Task<bool> DoesGenreExist(int id);
         public Task<Genre> GetGenre(int id);
-       
-
+        //customers
+        public Task<bool> DoesCustomerExist(int id);
+        public Task<Customer> GetCustomer(int id);
+        public Task CreateCustomer(Customer customer);
     }
 }
