@@ -34,5 +34,14 @@
                 }).ToList(),
             };
         }
+        public static ICollection<GetRecordDTO> MapRecords(ICollection<Record> records) {
+            var result = new List<GetRecordDTO>();
+
+            foreach(var record in records)
+            {
+                result.Add(GetRecordDTO.MapRecord(record));
+            }
+            return result;
+        }
     }
 }

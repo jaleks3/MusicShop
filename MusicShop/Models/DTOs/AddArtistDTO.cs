@@ -2,5 +2,6 @@
 {
     public class AddArtistDTO
     {
+        public string Name { get; set; }
     }
 }
