@@ -114,8 +114,8 @@ namespace MusicShop.Controllers
 
             return Ok("Succesfuly updated");
         }
-        [HttpPost("/Record/{recordId}")]
-        public async Task<IActionResult> AddRecord(int recordId, AddRecordDTO addRecordDTO) 
+        [HttpPost("/Record")]
+        public async Task<IActionResult> AddRecord(AddRecordDTO addRecordDTO) 
         {
             if(await _DbService.DoesRecordExist(recordId))
                 return NotFound($"Record wth given ID - {recordId} already exists");
@@ -148,7 +148,6 @@ namespace MusicShop.Controllers
 
             var record = new Record
             {
-                Id = recordId,
                 Name = addRecordDTO.Name,
                 Price = addRecordDTO.Price,
                 Description = addRecordDTO.Description,
