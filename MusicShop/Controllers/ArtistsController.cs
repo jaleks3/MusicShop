@@ -22,7 +22,8 @@ namespace MusicShop.Controllers
         {
             var artists = await _DbService.GetArtists();
             
-            return Ok(artists.Select(e => new GetArtistDTO {Name = e.Name, Records = GetRecordDTO.MapRecords(e.Records) }));
+            return Ok(artists);
+            //return Ok(artists.Select(e => new GetArtistDTO {Name = e.Name, Records = GetRecordDTO.MapRecords(e.Records) }));
         }
 
         [HttpGet("/Artist/{artistId}")]

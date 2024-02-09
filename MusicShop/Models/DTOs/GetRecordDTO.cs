@@ -8,7 +8,7 @@
         public DateTime Released { get; set; }
         public int Quantity { get; set; }
         public virtual GetDistributorDTO Distributor { get; set; } = null!;
-        public virtual ICollection<GetArtistDTO> Artists { get; set; } = new List<GetArtistDTO>();
+        public virtual ICollection<GetArtistNameDTO> Artists { get; set; } = new List<GetArtistNameDTO>();
         public virtual ICollection<GetGenreDTO> Genres { get; set; } = new List<GetGenreDTO>();
 
         public static GetRecordDTO MapRecord(Record record)
@@ -24,7 +24,7 @@
                 {
                     Name = record.Distributor.Name,
                 },
-                Artists = record.Artists.Select(artist => new GetArtistDTO
+                Artists = record.Artists.Select(artist => new GetArtistNameDTO
                 {
                     Name = artist.Name,
                 }).ToList(),
