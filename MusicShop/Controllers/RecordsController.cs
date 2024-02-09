@@ -30,8 +30,11 @@ namespace MusicShop.Controllers
                 return NotFound($"Record wth given ID - {recordId} does not exists");
 
             var record = await _DbService.GetRecord(recordId);
+            
+            
             return Ok(GetRecordDTO.MapRecord(record));
         }
+
 
         [HttpDelete(("/Record/{recordId}"))]
         public async Task<IActionResult> DeleteRecord(int recordId)
