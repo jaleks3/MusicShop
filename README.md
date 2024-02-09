@@ -22,11 +22,11 @@ The project structure is designed to promote separation of concerns and modulari
 ```
 
 ## Features
-ASP.NET Core: Utilizes the ASP.NET Core framework for building robust and scalable web applications.
+- ASP.NET Core: Utilizes the ASP.NET Core framework for building robust and scalable web applications.
 Entity Framework: Implements Entity Framework in "Database First" mode for efficient data access and management.
-Custom Database: The project supports a custom database schema tailored to the needs of a music store.
-Migrations: Utilizes database migrations to manage changes to the database schema over time.
-Business Logic: Implements business logic to facilitate essential operations within the music store application.
+- Custom Database: The project supports a custom database schema tailored to the needs of a music store.
+- Migrations: Utilizes database migrations to manage changes to the database schema over time.
+- Business Logic: Implements business logic to facilitate essential operations within the music store application.
 ## Getting Started
 To get started with the MusicShop project, follow these steps:
 
