@@ -230,7 +230,10 @@ namespace MusicShop.Services
 
         async Task<Customer> IDbService.GetCustomer(int id)
         {
-            return await _context.Customers.FirstOrDefaultAsync(r => r.Id == id);
+            return await _context.Customers
+                .Include(e => e.Address)
+                .Include(e => e.Discount)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         async Task IDbService.CreateCustomer(Customer customer)
@@ -247,14 +250,11 @@ namespace MusicShop.Services
             await _context.SaveChangesAsync();
         }
 
-        async Task IDbService.UpdateCustomer(Customer newCustomer)
+        async Task IDbService.UpdateCustomer(Customer customer)
         {
-            var customer = _context.Customers.Find(newCustomer.Id);
-            if (customer != null)
-            {
-                _context.Entry(customer).State = EntityState.Detached;
-            }
-            _context.Entry(customer).CurrentValues.SetValues(newCustomer);
+            var oldCustomer = _context.Customers.Find(customer.Id);
+            
+            _context.Entry(oldCustomer).CurrentValues.SetValues(customer);
             await _context.SaveChangesAsync();
         }
     }

@@ -22,7 +22,21 @@ namespace MusicShop.Controllers
 
             var customer = await _DbService.GetCustomer(customerId);
 
-            return Ok(customer);
+            return Ok(new AddCustomerDTO
+            {
+                Name = customer.Name,
+                Surname = customer.Surname,
+                addAddressDTO = new AddAddressDTO
+                {
+                    City = customer.Address.City,
+                    Country = customer.Address.Country,
+                    State = customer.Address.State,
+                    Postcode = customer.Address.Postcode,
+                    StreetName = customer.Address.StreetName,
+                    StreetNumber = customer.Address.StreetNumber,
+                }
+            });
+
         }
         [HttpPut("/Customer/{customerId}")]
         public async Task<IActionResult> UpdateCustomer(int customerId, AddCustomerDTO addCustomerDTO) 
