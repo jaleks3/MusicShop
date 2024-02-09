@@ -117,8 +117,6 @@ namespace MusicShop.Controllers
         [HttpPost("/Record")]
         public async Task<IActionResult> AddRecord(AddRecordDTO addRecordDTO) 
         {
-            if(await _DbService.DoesRecordExist(recordId))
-                return NotFound($"Record wth given ID - {recordId} already exists");
             if (!await _DbService.DoesDistributorExist(addRecordDTO.DistributorId))
                 return NotFound($"Distributor with given ID - {addRecordDTO.DistributorId} does not exist");
             if (!await _DbService.DoesTypeOfRecordExist(addRecordDTO.TypeOfRecordId))
