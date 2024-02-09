@@ -123,9 +123,15 @@ namespace MusicShop.Services
         {
             return _context.Artists.FirstOrDefault(e => e.Id == id);
         }
-        async Task IDbService.UpdateArtist(AddArtistDTO artistDto)
+        async Task IDbService.UpdateArtist(Artist artist)
         {
-            throw new NotImplementedException();
+            var existingEntity = _context.Artists.Find(artist.Id);
+            if (existingEntity != null)
+            {
+                _context.Entry(existingEntity).State = EntityState.Detached;
+            }
+            _context.Update(artist);
+            await _context.SaveChangesAsync();
         }
         //storages
         async Task IDbService.AddNewStorage(Models.Storage storage)
@@ -160,11 +166,6 @@ namespace MusicShop.Services
         async Task<bool> IDbService.DoesStorageExist(int id)
         {
             return await _context.Storages.AnyAsync(e => e.Id == id);
-        }
-
-        Task IDbService.UpdateArtist(Artist artist)
-        {
-            throw new NotImplementedException();
         }
         //distributor
         async Task<Models.Distributor> IDbService.GetDistributor(int id)
@@ -224,7 +225,29 @@ namespace MusicShop.Services
         {
             return await _context.Genres.FirstOrDefaultAsync(r => r.Id == id);
         }
+        //customer
+        async Task<bool> IDbService.DoesCustomerExist(int id)
+        {
+            return await _context.Customers.AnyAsync(r => r.Id == id);
+        }
 
-        
+        async Task<Customer> IDbService.GetCustomer(int id)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        async Task IDbService.CreateCustomer(Customer customer)
+        {
+            await _context.AddAsync(customer);
+            await _context.SaveChangesAsync();
+        }
+
+        async Task IDbService.DeleteCustomer(int id)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(r => r.Id == id);
+
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
+        }
     }
 }

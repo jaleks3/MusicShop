@@ -26,10 +26,9 @@ namespace MusicShop.Services
         public Task AddNewArtist(Artist artist);
         public Task DeleteArtist(int id);
         public Task<Artist> GetArtist(int id);
-        public Task UpdateArtist(Artist artist);
         public Task<bool> DoesArtistExist(int id);
         public Task<ICollection<Artist>> GetArtists();
-        public Task UpdateArtist(AddArtistDTO artistDto);
+        public Task UpdateArtist(Artist artist);
         //Distributor
         public Task<Distributor> GetDistributor(int id);
         public Task<bool> DoesDistributorExist(int id);
@@ -47,5 +46,6 @@ namespace MusicShop.Services
         public Task<bool> DoesCustomerExist(int id);
         public Task<Customer> GetCustomer(int id);
         public Task CreateCustomer(Customer customer);
+        public Task DeleteCustomer(int id);
     }
 }
