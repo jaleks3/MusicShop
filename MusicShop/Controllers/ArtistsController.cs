@@ -33,7 +33,7 @@ namespace MusicShop.Controllers
 
             var artist = await _DbService.GetArtist(artistId);
 
-            return Ok(new GetArtistDTO { Name = artist.Name, Records = GetRecordDTO.MapRecords(artist.Records)});
+            return Ok(artist);
         }
 
         [HttpPost("/Artist")]
@@ -55,13 +55,11 @@ namespace MusicShop.Controllers
 
             var artist = await _DbService.GetArtist(artistId);
 
-            var records = artist.Records;
-
             await _DbService.UpdateArtist(new Artist
             {
                 Id = artist.Id,
                 Name = addArtistDTO.Name,
-                Records = records
+                Records = artist.Records
             });
 
             return Ok("Succesfuly updated.");

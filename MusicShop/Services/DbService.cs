@@ -121,7 +121,9 @@ namespace MusicShop.Services
         }
         async Task<Artist> IDbService.GetArtist(int id)
         {
-            return _context.Artists.FirstOrDefault(e => e.Id == id);
+            return _context.Artists
+                .Include(e => e.Records)
+                .FirstOrDefault(e => e.Id == id);
         }
         async Task IDbService.UpdateArtist(Artist artist)
         {
@@ -167,7 +169,9 @@ namespace MusicShop.Services
         //distributor
         async Task<Models.Distributor> IDbService.GetDistributor(int id)
         {
-            return await _context.Distributors.FirstOrDefaultAsync(e => e.Id == id);
+            return await _context.Distributors
+                .Include(e => e.Records)
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
         async Task<bool> IDbService.DoesDistributorExist(int id)
         {

@@ -11,9 +11,12 @@
         public virtual ICollection<GetArtistNameDTO> Artists { get; set; } = new List<GetArtistNameDTO>();
         public virtual ICollection<GetGenreDTO> Genres { get; set; } = new List<GetGenreDTO>();
 
-        public static GetRecordDTO MapRecord(Record record)
+        public static GetRecordDTO? MapRecord(Record record)
         {
-            return new GetRecordDTO
+            if (record == null)
+                return null;
+
+            var res = new GetRecordDTO
             {
                 Name = record.Name,
                 Price = record.Price,
@@ -33,6 +36,8 @@
                     Name = genre.Name,
                 }).ToList(),
             };
+
+            return res;
         }
         public static ICollection<GetRecordDTO> MapRecords(ICollection<Record> records) {
             var result = new List<GetRecordDTO>();
