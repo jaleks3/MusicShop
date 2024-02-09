@@ -125,12 +125,9 @@ namespace MusicShop.Services
         }
         async Task IDbService.UpdateArtist(Artist artist)
         {
-            var existingEntity = _context.Artists.Find(artist.Id);
-            if (existingEntity != null)
-            {
-                _context.Entry(existingEntity).State = EntityState.Detached;
-            }
-            _context.Update(artist);
+            var oldArtist = _context.Artists.Find(artist.Id);
+            
+            _context.Entry(oldArtist).CurrentValues.SetValues(artist);
             await _context.SaveChangesAsync();
         }
         //storages
@@ -250,14 +247,14 @@ namespace MusicShop.Services
             await _context.SaveChangesAsync();
         }
 
-        async Task IDbService.UpdateCustomer(Customer customer)
+        async Task IDbService.UpdateCustomer(Customer newCustomer)
         {
-            var existingEntity = _context.Customers.Find(customer.Id);
-            if (existingEntity != null)
+            var customer = _context.Customers.Find(newCustomer.Id);
+            if (customer != null)
             {
-                _context.Entry(existingEntity).State = EntityState.Detached;
+                _context.Entry(customer).State = EntityState.Detached;
             }
-            _context.Update(customer);
+            _context.Entry(customer).CurrentValues.SetValues(newCustomer);
             await _context.SaveChangesAsync();
         }
     }

@@ -59,6 +59,7 @@ namespace MusicShop.Controllers
 
             await _DbService.UpdateArtist(new Artist
             {
+                Id = artist.Id,
                 Name = addArtistDTO.Name,
                 Records = records
             });
