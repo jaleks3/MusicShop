@@ -31,6 +31,11 @@ namespace MusicShop.Controllers
         {
             return NotFound();
         }
+        [HttpDelete("/Order/{orderId]")]
+        public async Task<IActionResult> DeleteOrder(int orderId)
+        {
+            return NotFound();
+        }
 
     }
 }
