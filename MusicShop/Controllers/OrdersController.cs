@@ -26,5 +26,11 @@ namespace MusicShop.Controllers
         {
             return NotFound();
         }
+        [HttpPut("/Order/{orderId]")]
+        public async Task<IActionResult> UpdateOrder(int orderId)
+        {
+            return NotFound();
+        }
+
     }
 }
