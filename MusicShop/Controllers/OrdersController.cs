@@ -1,12 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicShop.Services;
 
 namespace MusicShop.Controllers
-{
-    public class OrdersController : Controller
+{   
+    [ApiController]
+    [Route("/[controller]")]
+    public class OrdersController : ControllerBase
     {
-        public IActionResult Index()
+        
+        private readonly IDbService _DbService;
+
+        public OrdersController(IDbService dbService)
         {
-            return View();
+            _DbService = dbService;
+        }
+
+        [HttpGet("/Order")]
+        public async Task<IActionResult> GetOrders()
+        {
+            return NotFound();
         }
     }
 }
