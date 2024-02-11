@@ -20,5 +20,11 @@ namespace MusicShop.Controllers
         {
             return NotFound();
         }
+
+        [HttpGet("/Order/{orderId]")]
+        public async Task<IActionResult> GetOrder(int orderId)
+        {
+            return NotFound();
+        }
     }
 }
