@@ -48,5 +48,12 @@ namespace MusicShop.Services
         public Task CreateCustomer(Customer customer);
         public Task DeleteCustomer(int id);
         public Task UpdateCustomer(Customer customer);
+        //order
+        public Task<bool> DoesOrderExist(int id);
+        public Task<Order> GetOrder(int id);
+        public Task UpdateOrder(Order order);
+        public Task DeleteOrder(int id);
+        public Task<ICollection<Order>> GetOrders();
+        public Task CreateOrder(Order order);
     }
 }

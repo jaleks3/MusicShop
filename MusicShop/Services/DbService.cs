@@ -261,5 +261,43 @@ namespace MusicShop.Services
             _context.Entry(oldCustomer).CurrentValues.SetValues(customer);
             await _context.SaveChangesAsync();
         }
+        //orders
+        async Task<bool> IDbService.DoesOrderExist(int id)
+        {
+            return await _context.Orders.AnyAsync(r => r.Id == id);
+        }
+
+        async Task<Order> IDbService.GetOrder(int id)
+        {
+            return await _context.Orders
+                .FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        async Task IDbService.UpdateOrder(Order order)
+        {
+            var oldOrder = _context.Orders.Find(order.Id);
+
+            _context.Entry(oldOrder).CurrentValues.SetValues(order);
+            await _context.SaveChangesAsync();
+        }
+
+        async Task IDbService.DeleteOrder(int id)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(r => r.Id == id);
+
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
+        }
+
+        async Task<ICollection<Order>> IDbService.GetOrders()
+        {
+            return await _context.Orders.ToListAsync();
+        }
+
+        async Task IDbService.CreateOrder(Order order)
+        {
+            await _context.AddAsync(order);
+            await _context.SaveChangesAsync();
+        }
     }
 }
