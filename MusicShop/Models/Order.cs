@@ -20,6 +20,6 @@ public partial class Order
     public virtual Address Address { get; set; } = null!;
 
     public virtual ICollection<OrderRecord> OrderRecords { get; set; } = new List<OrderRecord>();
-
+    public virtual ICollection<CustomerOrder> CustomerOrders { get; set; } = new List<CustomerOrder>();
     public virtual Status Status { get; set; } = null!;
 }

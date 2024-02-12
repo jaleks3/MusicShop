@@ -18,4 +18,6 @@ public partial class Customer
     public virtual Address Address { get; set; } = null!;
 
     public virtual Discount? Discount { get; set; }
+    public virtual ICollection<CustomerOrder> CustomerOrders { get; set; } = new List<CustomerOrder>();
+
 }

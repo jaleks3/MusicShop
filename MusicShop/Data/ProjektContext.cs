@@ -132,6 +132,8 @@ public partial class ProjektContext : DbContext
             entity.HasOne(d => d.Discount).WithMany(p => p.Customers)
                 .HasForeignKey(d => d.DiscountId)
                 .HasConstraintName("Customer_Discount");
+
+
         });
 
         modelBuilder.Entity<Discount>(entity =>
@@ -200,6 +202,7 @@ public partial class ProjektContext : DbContext
                 .HasForeignKey(d => d.StatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Order_Status");
+
         });
 
         modelBuilder.Entity<OrderRecord>(entity =>
@@ -220,6 +223,26 @@ public partial class ProjektContext : DbContext
                 .HasForeignKey(d => d.RecordId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Order_Record_Record");
+        });
+
+        modelBuilder.Entity<CustomerOrder>(entity => {
+            
+            entity.HasKey(e => new { e.OrderId, e.CustomerId }).HasName("Order_Customer_pk");
+
+            entity.ToTable("Order_Customer");
+
+            entity.Property(e => e.OrderId).HasColumnName("Order_id");
+            entity.Property(e => e.CustomerId).HasColumnName("Customer_id");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.CustomerOrders)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Customer_Order_Customer");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.CustomerOrders)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Customer_Order_Order");
         });
 
         modelBuilder.Entity<Record>(entity =>
@@ -272,6 +295,8 @@ public partial class ProjektContext : DbContext
                         j.IndexerProperty<int>("RecordId").HasColumnName("Record_id");
                         j.IndexerProperty<int>("GenreId").HasColumnName("Genre_id");
                     });
+            
+
         });
 
         modelBuilder.Entity<RecordStorage>(entity =>

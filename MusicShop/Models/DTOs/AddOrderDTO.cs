@@ -2,12 +2,7 @@
 {
     public class AddOrderDTO
     {
-        public int Quantity { get; set; }
-        public DateTime RequestAt { get; set; }
-
-        public DateTime FulfillAt { get; set; }
-        public virtual Address Address { get; set; } = null!;
+        public int CustomerId { get; set; }
         public IEnumerable<int> RecordsId { get; set; } = new List<int>();
-        public virtual Status Status { get; set; } = null!;
     }
 }
