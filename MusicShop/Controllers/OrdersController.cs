@@ -18,25 +18,27 @@ namespace MusicShop.Controllers
         [HttpGet("/Order")]
         public async Task<IActionResult> GetOrders()
         {
-            return NotFound();
+            var orders = await _DbService.GetOrders(); 
+
+            return Ok(orders);
         }
 
-        [HttpGet("/Order/{orderId]")]
+        [HttpGet("/Order/{orderId}")]
         public async Task<IActionResult> GetOrder(int orderId)
         {
             return NotFound();
         }
-        [HttpPut("/Order/{orderId]")]
+        [HttpPut("/Order/{orderId}")]
         public async Task<IActionResult> UpdateOrder(int orderId)
         {
             return NotFound();
         }
-        [HttpDelete("/Order/{orderId]")]
+        [HttpDelete("/Order/{orderId}")]
         public async Task<IActionResult> DeleteOrder(int orderId)
         {
             return NotFound();
         }
-        [HttpPost("/Order/{orderId]")]
+        [HttpPost("/Order/{orderId}")]
         public async Task<IActionResult> AddOrder(int orderId)
         {
             return NotFound();

@@ -270,7 +270,9 @@ namespace MusicShop.Services
         async Task<Order> IDbService.GetOrder(int id)
         {
             return await _context.Orders
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .Include(e => e.Address)
+                .Include(e => e.Status)
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         async Task IDbService.UpdateOrder(Order order)
@@ -283,15 +285,19 @@ namespace MusicShop.Services
 
         async Task IDbService.DeleteOrder(int id)
         {
-            var customer = await _context.Customers.FirstOrDefaultAsync(r => r.Id == id);
+            var order = await _context.Orders
+                .FirstOrDefaultAsync(e => e.Id == id);
 
-            _context.Customers.Remove(customer);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }
 
         async Task<ICollection<Order>> IDbService.GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(e => e.Address)
+                .Include(e => e.Status)
+                .ToListAsync();
         }
 
         async Task IDbService.CreateOrder(Order order)
