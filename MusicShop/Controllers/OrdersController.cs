@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicShop.Models;
 using MusicShop.Services;
 
 namespace MusicShop.Controllers
@@ -26,7 +27,12 @@ namespace MusicShop.Controllers
         [HttpGet("/Order/{orderId}")]
         public async Task<IActionResult> GetOrder(int orderId)
         {
-            return NotFound();
+            if(!await _DbService.DoesOrderExist(orderId))
+                return NotFound($"Order with given ID - {orderId} does not exist");
+
+            var order = await _DbService.GetOrder(orderId);
+
+            return Ok(order);
         }
         [HttpPut("/Order/{orderId}")]
         public async Task<IActionResult> UpdateOrder(int orderId)
